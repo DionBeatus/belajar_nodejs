@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+
+<body>
+    <section id="data">
+    <form id="dataForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+
+        <input type="submit" value="Save">
+    </form>
+    <p id="dataMsg"></p>
+    </section>
+</body>
+</html>
+
+<script>
+    document.getElementById('dataForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = new URLSearchParams(new FormData(form));
+
+    const response = await fetch('/data', {
+        method:'POST',
+        body:data,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    const text = await response.text();
+    document.getElementById('dataMsg').textContent = text;
+    form.reset();
+});
+</script>
